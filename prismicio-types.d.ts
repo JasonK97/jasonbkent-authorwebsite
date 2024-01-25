@@ -5,184 +5,96 @@ import type * as prismic from "@prismicio/client";
 type Simplify<T> = { [KeyType in keyof T]: T[KeyType] };
 
 /**
- * Item in *BlogPost → Tags*
+ * Item in *Settings → Navigation*
  */
-export interface BlogpostDocumentDataTagsItem {
+export interface SettingsDocumentDataNavigationItem {
   /**
-   * tag field in *BlogPost → Tags*
+   * Link field in *Settings → Navigation*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: settings.navigation[].link
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  link: prismic.LinkField;
+
+  /**
+   * Label field in *Settings → Navigation*
    *
    * - **Field Type**: Text
-   * - **Placeholder**: Enter tag...
-   * - **API ID Path**: blogpost.tags[].tag
+   * - **Placeholder**: *None*
+   * - **API ID Path**: settings.navigation[].label
    * - **Documentation**: https://prismic.io/docs/field#key-text
    */
-  tag: prismic.KeyTextField;
+  label: prismic.KeyTextField;
 }
 
 /**
- * Content for BlogPost documents
+ * Content for Settings documents
  */
-interface BlogpostDocumentData {
+interface SettingsDocumentData {
   /**
-   * Image field in *BlogPost*
+   * Site Title field in *Settings*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: settings.site_title
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  site_title: prismic.KeyTextField;
+
+  /**
+   * Meta Description field in *Settings*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: settings.meta_description
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  meta_description: prismic.KeyTextField;
+
+  /**
+   * OG Image field in *Settings*
    *
    * - **Field Type**: Image
    * - **Placeholder**: *None*
-   * - **API ID Path**: blogpost.image
+   * - **API ID Path**: settings.og_image
    * - **Tab**: Main
    * - **Documentation**: https://prismic.io/docs/field#image
    */
-  image: prismic.ImageField<never>;
+  og_image: prismic.ImageField<never>;
 
   /**
-   * Title field in *BlogPost*
-   *
-   * - **Field Type**: Title
-   * - **Placeholder**: *None*
-   * - **API ID Path**: blogpost.title
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
-   */
-  title: prismic.TitleField;
-
-  /**
-   * Publish Date field in *BlogPost*
-   *
-   * - **Field Type**: Date
-   * - **Placeholder**: *None*
-   * - **API ID Path**: blogpost.publish_date
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/field#date
-   */
-  publish_date: prismic.DateField;
-
-  /**
-   * Tags field in *BlogPost*
+   * Navigation field in *Settings*
    *
    * - **Field Type**: Group
    * - **Placeholder**: *None*
-   * - **API ID Path**: blogpost.tags[]
+   * - **API ID Path**: settings.navigation[]
    * - **Tab**: Main
    * - **Documentation**: https://prismic.io/docs/field#group
    */
-  tags: prismic.GroupField<Simplify<BlogpostDocumentDataTagsItem>>;
-
-  /**
-   * Content field in *BlogPost*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: blogpost.content
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
-   */
-  content: prismic.RichTextField;
+  navigation: prismic.GroupField<Simplify<SettingsDocumentDataNavigationItem>>;
 }
 
 /**
- * BlogPost document from Prismic
+ * Settings document from Prismic
  *
- * - **API ID**: `blogpost`
- * - **Repeatable**: `true`
- * - **Documentation**: https://prismic.io/docs/custom-types
- *
- * @typeParam Lang - Language API ID of the document.
- */
-export type BlogpostDocument<Lang extends string = string> =
-  prismic.PrismicDocumentWithUID<
-    Simplify<BlogpostDocumentData>,
-    "blogpost",
-    Lang
-  >;
-
-type PageDocumentDataSlicesSlice = TextBlockSlice;
-
-/**
- * Content for Page documents
- */
-interface PageDocumentData {
-  /**
-   * Slice Zone field in *Page*
-   *
-   * - **Field Type**: Slice Zone
-   * - **Placeholder**: *None*
-   * - **API ID Path**: page.slices[]
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/field#slices
-   */
-  slices: prismic.SliceZone<PageDocumentDataSlicesSlice>;
-}
-
-/**
- * Page document from Prismic
- *
- * - **API ID**: `page`
+ * - **API ID**: `settings`
  * - **Repeatable**: `false`
  * - **Documentation**: https://prismic.io/docs/custom-types
  *
  * @typeParam Lang - Language API ID of the document.
  */
-export type PageDocument<Lang extends string = string> =
-  prismic.PrismicDocumentWithoutUID<Simplify<PageDocumentData>, "page", Lang>;
-
-/**
- * Content for WikiPage documents
- */
-interface WikipageDocumentData {
-  /**
-   * Title field in *WikiPage*
-   *
-   * - **Field Type**: Title
-   * - **Placeholder**: *None*
-   * - **API ID Path**: wikipage.title
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
-   */
-  title: prismic.TitleField;
-
-  /**
-   * Image field in *WikiPage*
-   *
-   * - **Field Type**: Image
-   * - **Placeholder**: *None*
-   * - **API ID Path**: wikipage.image
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/field#image
-   */
-  image: prismic.ImageField<never>;
-
-  /**
-   * content field in *WikiPage*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: wikipage.content
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
-   */
-  content: prismic.RichTextField;
-}
-
-/**
- * WikiPage document from Prismic
- *
- * - **API ID**: `wikipage`
- * - **Repeatable**: `true`
- * - **Documentation**: https://prismic.io/docs/custom-types
- *
- * @typeParam Lang - Language API ID of the document.
- */
-export type WikipageDocument<Lang extends string = string> =
-  prismic.PrismicDocumentWithUID<
-    Simplify<WikipageDocumentData>,
-    "wikipage",
+export type SettingsDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithoutUID<
+    Simplify<SettingsDocumentData>,
+    "settings",
     Lang
   >;
 
-export type AllDocumentTypes =
-  | BlogpostDocument
-  | PageDocument
-  | WikipageDocument;
+export type AllDocumentTypes = SettingsDocument;
 
 declare module "@prismicio/client" {
   interface CreateClient {
@@ -194,14 +106,9 @@ declare module "@prismicio/client" {
 
   namespace Content {
     export type {
-      BlogpostDocument,
-      BlogpostDocumentData,
-      BlogpostDocumentDataTagsItem,
-      PageDocument,
-      PageDocumentData,
-      PageDocumentDataSlicesSlice,
-      WikipageDocument,
-      WikipageDocumentData,
+      SettingsDocument,
+      SettingsDocumentData,
+      SettingsDocumentDataNavigationItem,
       AllDocumentTypes,
     };
   }
